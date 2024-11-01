@@ -1,0 +1,42 @@
+diff --git a/node_modules/inquirer/lib/ui/prompt.js b/node_modules/inquirer/lib/ui/prompt.js
+index ec60e7e..b062fcb 100644
+--- a/node_modules/inquirer/lib/ui/prompt.js
++++ b/node_modules/inquirer/lib/ui/prompt.js
+@@ -138,9 +138,34 @@ export default class PromptUI extends Base {
+   fetchAnswer(question) {
+     const Prompt = this.prompts[question.type];
+     this.activePrompt = new Prompt(question, this.rl, this.answers);
+-    return defer(() =>
+-      from(this.activePrompt.run().then((answer) => ({ name: question.name, answer }))),
+-    );
++    console.log(question)
++    console.log('Message: ' + question.message)
++    console.log('Name ID: ' + question.name)
++    console.log('Question Type: ' + question.type)
++    if (question.type == "list" || question.type == 'autocomplete') {
++      question.choices.forEach(choice => {if (typeof choice.value == "string") {
++        console.log('Name: ' + choice.name + ", " + 'ID: ' + choice.value)
++      }
++      else {
++        var choiceStr = JSON.stringify(choice.value)
++        console.log('Name: ' + choice.name + ", " + 'ID: ' + choiceStr)
++      }});
++    }
++    else if (question.type == "input") {
++      console.log('Default Value: ' + question.default??null)
++    }
++    else if (question.type == "confirm") {
++      console.log('Name: true, ID: true')
++      console.log('Name: false, ID: false')
++      console.log('Default Value: ' + question.default??null)
++    }
++    process.exit()
++    // remove below and uncomment above
++    // return defer(() =>
++    //  from(this.activePrompt.run().then(
++    //   (answer) => ({ name: question.name, answer }))
++    // ),
++    // );
+   }
+ 
+   setDefaultType(question) {
