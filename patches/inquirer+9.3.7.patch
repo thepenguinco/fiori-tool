@@ -1,8 +1,8 @@
 diff --git a/node_modules/inquirer/lib/ui/prompt.js b/node_modules/inquirer/lib/ui/prompt.js
-index ec60e7e..b062fcb 100644
+index ec60e7e..5663163 100644
 --- a/node_modules/inquirer/lib/ui/prompt.js
 +++ b/node_modules/inquirer/lib/ui/prompt.js
-@@ -138,9 +138,34 @@ export default class PromptUI extends Base {
+@@ -138,9 +138,38 @@ export default class PromptUI extends Base {
    fetchAnswer(question) {
      const Prompt = this.prompts[question.type];
      this.activePrompt = new Prompt(question, this.rl, this.answers);
@@ -14,7 +14,11 @@ index ec60e7e..b062fcb 100644
 +    console.log('Name ID: ' + question.name)
 +    console.log('Question Type: ' + question.type)
 +    if (question.type == "list" || question.type == 'autocomplete') {
-+      question.choices.forEach(choice => {if (typeof choice.value == "string") {
++      question.choices.forEach(choice => {
++      if (typeof choice == "string") {
++          console.log('Name: ' + choice + ", " + 'ID: ' + choice)
++      }
++      else if (typeof choice.value == "string") {
 +        console.log('Name: ' + choice.name + ", " + 'ID: ' + choice.value)
 +      }
 +      else {
