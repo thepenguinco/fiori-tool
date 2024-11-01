@@ -37,7 +37,6 @@ class TestAdapter {
               }
             );
       this.log = options?.log ?? createLogger(this);
-      this.console.log(this.promptModule)
       this.answers = answers
   }
   get _colorDiffAdded() {
@@ -71,7 +70,7 @@ class TestAdapter {
   async prompt(questions, initialAnswers) {
     const promise = this.promptModule(questions, this.answers);
     promise.then(function(answers){
-      console.log(answers)
+      // console.log(answers)
     });
     return promise;
   }
@@ -79,12 +78,12 @@ class TestAdapter {
 
 var args = process.argv.slice(2);
 var answers = JSON.parse(fs.readFileSync(args[0], 'utf8'));
-console.log(answers)
 
+// Use custom adapter and environment
 var adapter = new TestAdapter(undefined, answers)
 var env = createEnv({adapter});
 
-// The #lookup() method will search the user computer for installed generators
+// The lookup() method will search the user computer for installed generators
 // The search if done from the current working directory
 env.lookup();
 
@@ -93,5 +92,3 @@ env.run('@sap/fiori').then(() => {
   }, err => {
     console.log(`error ${err}`);
   });
-
-
